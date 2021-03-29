@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm, NgModel } from '@angular/forms';
-import { VocabResponse, DidGuessRequest } from 'src/app/dto/dto';
+import { VocabResponse, DidGuessRequest, FreshVocabRequest, FreshVocabResponse } from 'src/app/dto/dto';
 
 @Component({
   selector: 'app-main',
@@ -20,10 +20,35 @@ export class MainComponent implements OnInit {
     this.getRandomVocab();
   } 
 
+  submit(vocabForm: NgForm, submit) {
+    console.log(vocabForm.value.Polish);
+    console.log(vocabForm.value.English);
+    let checked: boolean;
+    if(vocabForm.value.start === "") {
+      checked = false;
+    } else {
+      checked = vocabForm.value.start;
+    }
+    console.log(checked)
+    let payload: FreshVocabRequest = 
+    {
+      polish: vocabForm.value.Polish,
+      english: vocabForm.value.English,
+      startNow: checked 
+    }
+    this.http.post<FreshVocabResponse>('http://localhost:8080/api/fresh', payload).subscribe(
+      (val) => {
+        console.log(val.message);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
   submitPrint(vocabForm: NgForm, polModel: NgModel, engModel: NgModel) {
-    console.log(vocabForm.value, vocabForm.valid);
-    console.log("---")
-    console.log(polModel.value, polModel.valid, engModel.value, engModel.valid)  
+    console.log(vocabForm.value.Polish);
+    console.log(vocabForm.value.English);
   }
 
   learnNewRandom() {

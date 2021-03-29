@@ -1,12 +1,10 @@
 <h4>Learn English App</h4>
 
-<div>
-    <button (click)="switch()">{{ display }}</button>
-</div>
+<h4 (click)="switch()" class="display">{{ display }}</h4>
 <hr>
 <div>
-    <button (click)="didGuess(true)">Yes, I do :)</button>
-    <button (click)="didGuess(false)">No, I don't :(</button>
+    <button class="yes" (click)="didGuess(true)">Yes :)</button>
+    <button class="no" (click)="didGuess(false)">No :(</button>
 </div>
 <hr>
 <div>
@@ -14,11 +12,18 @@
 </div>
 <hr>
 <div>
-    <form #vocabForm="ngForm">
+    <form #vocabForm="ngForm"
+          (ngSubmit)="submit(vocabForm, $event)"  
+    >
         <input required #polish="ngModel" ngModel type="text" name="Polish" placeholder="Polish">
         <input required #english="ngModel" ngModel type="text" name="English" placeholder="English">
-        <hr>
-        <button (click)="submitPrint(vocabForm, polish, english)">--- Submit ---</button>
+        <!-- <div *ngIf="!(polish.errors==null && english.errors==null)" class="red">Both fields are required</div> -->
+       
+        <!-- <button (click)="submitPrint(vocabForm, polish, english)">--- Submit ---</button> -->
+        <input #start="ngModel" ngModel type="checkbox" checked="checked" id="start" name="start" value="start">
+        <label for="start">Start now</label><br>
+        <hr>    
+        <button [disabled]="!vocabForm.valid" type="submit">Submit</button>
     </form>
     <!-- <div>
         {{ vocabForm.value | json }}
@@ -28,5 +33,8 @@
     </div>
     <div>
         {{ english.value}}
+    </div> -->
+    <!-- <div>
+        {{ polish.errors | json }}
     </div> -->
 </div>
