@@ -10,9 +10,23 @@
 </div>
 <hr>
 <div>
-    <button (click)="learnNewRandom()">Add</button>
+    <button (click)="learnNewRandom()">Add from resources</button>
 </div>
 <hr>
 <div>
-    <button>Add New</button>
+    <form #vocabForm="ngForm">
+        <input #polish="ngModel" ngModel type="text" name="Polish" placeholder="Polish">
+        <input #english="ngModel" ngModel type="text" name="English" placeholder="English">
+        <hr>
+        <button (click)="submit(vocabForm)">--- Submit ---</button>
+    </form>
+    <!-- <div>
+        {{ vocabForm.value | json }}
+    </div>
+    <div>
+        {{ polish.value }}
+    </div>
+    <div>
+        {{ english.value}}
+    </div> -->
 </div>

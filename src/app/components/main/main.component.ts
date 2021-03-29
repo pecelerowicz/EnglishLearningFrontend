@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { VocabResponse, DidGuessRequest } from 'src/app/dto/dto';
 
 @Component({
@@ -18,6 +19,10 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     this.getRandomVocab();
   } 
+
+  submit(vocabForm: NgForm) {
+    console.log(vocabForm.value, vocabForm.valid);
+  }
 
   learnNewRandom() {
     this.http.get<VocabResponse>('http://localhost:8080/api/new').subscribe(
