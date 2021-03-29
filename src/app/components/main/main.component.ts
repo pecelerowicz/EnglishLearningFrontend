@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, NgModel } from '@angular/forms';
 import { VocabResponse, DidGuessRequest } from 'src/app/dto/dto';
 
 @Component({
@@ -20,8 +20,10 @@ export class MainComponent implements OnInit {
     this.getRandomVocab();
   } 
 
-  submit(vocabForm: NgForm) {
+  submitPrint(vocabForm: NgForm, polModel: NgModel, engModel: NgModel) {
     console.log(vocabForm.value, vocabForm.valid);
+    console.log("---")
+    console.log(polModel.value, polModel.valid, engModel.value, engModel.valid)  
   }
 
   learnNewRandom() {

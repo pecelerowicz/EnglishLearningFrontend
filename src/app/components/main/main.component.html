@@ -15,10 +15,10 @@
 <hr>
 <div>
     <form #vocabForm="ngForm">
-        <input #polish="ngModel" ngModel type="text" name="Polish" placeholder="Polish">
-        <input #english="ngModel" ngModel type="text" name="English" placeholder="English">
+        <input required #polish="ngModel" ngModel type="text" name="Polish" placeholder="Polish">
+        <input required #english="ngModel" ngModel type="text" name="English" placeholder="English">
         <hr>
-        <button (click)="submit(vocabForm)">--- Submit ---</button>
+        <button (click)="submitPrint(vocabForm, polish, english)">--- Submit ---</button>
     </form>
     <!-- <div>
         {{ vocabForm.value | json }}
