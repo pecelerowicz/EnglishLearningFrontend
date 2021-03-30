@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm, NgModel } from '@angular/forms';
 import { VocabResponse, DidGuessRequest, FreshVocabRequest, FreshVocabResponse } from 'src/app/dto/dto';
@@ -11,6 +11,9 @@ import { VocabResponse, DidGuessRequest, FreshVocabRequest, FreshVocabResponse }
 export class MainComponent implements OnInit {
   // address: string = "localhost";
   address: string = "134.122.73.65";
+
+  selectedFile: File = null;
+  progress: number = 0;
 
   vocab: VocabResponse = {id: -1, polish: '', english: ''};
   isPolish: boolean = true;
@@ -95,6 +98,28 @@ export class MainComponent implements OnInit {
         this.vocab = val;
         this.isPolish = true;
         this.display = this.vocab.polish;
+      },
+      (err) => {
+        console.log(err);
+      }
+    )
+  }
+
+  onFileSelected(event) {
+    this.selectedFile = <File>event.target.files[0];
+  }
+
+  onUpload() {
+    const fd = new FormData();
+    fd.append('file', this.selectedFile, this.selectedFile.name)
+    this.http.post('http://' + this.address + ':8080/api/upload', fd, {
+      reportProgress: true,
+      observe: 'events'
+    }).subscribe(
+      (event) => {
+        if(event.type === HttpEventType.UploadProgress) {
+          this.progress = Math.round((event.loaded*100)/event.total);
+        }
       },
       (err) => {
         console.log(err);

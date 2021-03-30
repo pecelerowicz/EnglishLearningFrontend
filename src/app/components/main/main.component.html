@@ -38,3 +38,9 @@
         {{ polish.errors | json }}
     </div> -->
 </div>
+<hr>
+<div>
+    <input type="file" (change)="onFileSelected($event)">
+    <button type="button" (click)="onUpload()">Upload</button>
+</div>
+<div>Progress: {{progress}}%</div>
