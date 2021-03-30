@@ -9,6 +9,8 @@ import { VocabResponse, DidGuessRequest, FreshVocabRequest, FreshVocabResponse }
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
+  // address: string = "localhost";
+  address: string = "134.122.73.65";
 
   vocab: VocabResponse = {id: -1, polish: '', english: ''};
   isPolish: boolean = true;
@@ -36,7 +38,7 @@ export class MainComponent implements OnInit {
       english: vocabForm.value.English,
       startNow: checked 
     }
-    this.http.post<FreshVocabResponse>('http://localhost:8080/api/fresh', payload).subscribe(
+    this.http.post<FreshVocabResponse>('http://' + this.address + ':8080/api/fresh', payload).subscribe(
       (val) => {
         console.log(val.message);
       },
@@ -52,7 +54,7 @@ export class MainComponent implements OnInit {
   }
 
   learnNewRandom() {
-    this.http.get<VocabResponse>('http://localhost:8080/api/new').subscribe(
+    this.http.get<VocabResponse>('http://' + this.address + ':8080/api/new').subscribe(
       (val) => {
         this.vocab = val;
         this.isPolish = true;
@@ -66,7 +68,7 @@ export class MainComponent implements OnInit {
 
   didGuess(didGuess: boolean) {
     let payload: DidGuessRequest = {id: this.vocab.id, didGuess: didGuess};
-    this.http.post<VocabResponse>('http://localhost:8080/api/did-guess', payload).subscribe(
+    this.http.post<VocabResponse>('http://' + this.address + ':8080/api/did-guess', payload).subscribe(
       (val) => {
         this.vocab = val;
         this.isPolish = true;
@@ -88,7 +90,7 @@ export class MainComponent implements OnInit {
   }
 
   getRandomVocab() {
-    this.http.get<VocabResponse>('http://localhost:8080/api/old').subscribe(
+    this.http.get<VocabResponse>('http://' + this.address + ':8080/api/old').subscribe(
       (val) => {
         this.vocab = val;
         this.isPolish = true;
